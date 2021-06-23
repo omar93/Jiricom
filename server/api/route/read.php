@@ -1,7 +1,7 @@
 <?php
     header('Access-Control-Allow-Origin: *');
     header('Content-Type: application/json');
-
+    
     include '../../config/database.php';
     include '../../models/Route.php';
 
@@ -28,13 +28,13 @@
             $route_item = array(
                 'routeId' => $routeId,
                 'licensePlate' => $licensePlate,
-                'timeStart' =>$timeStart,
-                'timeEnd' => $timeEnd,
+                'timeStart' =>date('F jS, Y h:i:s', strtotime($timeStart)),
+                'timeEnd' => date('F jS, Y h:i:s', strtotime($timeEnd)),
                 'distance' => $distance,
-                'travelTime' => $travelTime,
-                'startAddress' => $startAddress, // error starts, problem är ÅÄÖ
-                'stopAddress' => $stopAddress,  // ÅÄÖ
-                'routeType' => $routeType,  // ÅÄÖ
+                'travelTime' => gmdate("H:i:s", $travelTime),
+                'startAddress' => $startAddress,
+                'stopAddress' => $stopAddress,
+                'routeType' => $routeType,
                 'liters' => $liters,
                 'cost' => $cost,
                 'firstLat' => $firstLat,
