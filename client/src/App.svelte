@@ -1,18 +1,25 @@
 <script>
-	import axios from 'axios'
-	let url = 'http://localhost/jiricom/server'
+	let url = 'http://localhost/jiricom/server/api/route/read.php'
+	let dataArr = []
 	const handleSubmit = async e => {
 		e.preventDefault()
-		fetch(url)
-		.then(res => res.json())
-		.then(data => {
-			console.log('Svar:')
-			console.log(data)
-		})
-		.catch(error => {
+		try {
+			let req = await fetch(url)
+			let data = await req.json()
+			console.log('Data:')
+			// console.log(data)
+			dataArr = data.data
+			runList(dataArr)
+		} catch(err) {
 			console.log('Error:')
-			console.log(error)
-		})
+			console.log(err)
+		}
+	}
+
+	const runList = (data) => {
+		data.forEach(user => {
+			console.log(user)
+		});
 	}
 </script>
 
