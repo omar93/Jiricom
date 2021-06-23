@@ -1,13 +1,5 @@
 <?php
-    $serverName = "localhost";
-    $userName = "root";
-    $password = "";
-    $dbname = "jiricom";
-
-    // Connection
-    $connection = new mysqli($serverName,$userName,$password,$dbname);
-    $connection->set_charset("utf8");
-
+    include('./connect.php');
 
     // Check connection health
     if($connection->connect_error) {
