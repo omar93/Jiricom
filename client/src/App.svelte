@@ -1,38 +1,27 @@
 <script>
-	let url = 'http://localhost/jiricom/server/api/route/read.php'
-	let dataArr = []
-	const handleSubmit = async e => {
-		e.preventDefault()
-		try {
-			let req = await fetch(url)
-			let data = await req.json()
-			console.log('Data:')
-			// console.log(data)
-			dataArr = data.data
-			runList(dataArr)
-		} catch(err) {
-			console.log('Error:')
-			console.log(err)
-		}
-	}
-
-	const runList = (data) => {
-		data.forEach(user => {
-			console.log(user)
-		});
-	}
+	import List from './components/list.svelte'
 </script>
 
-<form action="GET" on:submit={handleSubmit}>
-	<label for="user">Get Data form</label><br>
-	<input type="submit" value="get data">
-</form>
+<div class="main-grid">
+	<div id="listContainer">
+		<List></List>
+	</div>
+</div>
 
 <style>
-	form {
-		border: 1px solid black;
-		width: 50%;
-		padding: 1em;
-		margin: auto;
+
+	.main-grid {
+		display: grid;
+		width: 100%;
+		height: 100%;
+		grid-template-columns:1fr;
+		grid-template-areas:
+		'list';
 	}
+
+	#listContainer {
+		border: 1px solid red;
+		overflow-y: scroll;
+	}
+
 </style>
