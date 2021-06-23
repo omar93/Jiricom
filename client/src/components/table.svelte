@@ -1,6 +1,9 @@
 <script>
     import { onMount } from 'svelte'
+	import Modal from './modal.svelte'
+
     export let items = []
+    let showModal = false
 
     let url = 'http://localhost/jiricom/server/api/route/read.php'
 
@@ -17,22 +20,25 @@
     const rowClicked = e => {
         let startAddress = e.path[1].cells[6].textContent
         let stopAddress = e.path[1].cells[7].textContent
+        showModal = true
     }
 </script>
-
+    <Modal bind:showModal>
+        
+    </Modal>
     <table id="customers">
         <tr>
-            <th>routeId</th>
-            <th>licensePlate</th>
-            <th>timeStart</th>
-            <th>timeEnd</th>
-            <th>distance</th>
-            <th>travelTime</th>
-            <th>startAddress</th>
-            <th>stopAddress</th>
-            <th>routeTtype</th>
-            <th>litres</th>
-            <th>cost</th>
+            <th>rutt ID</th>
+            <th>Registreringsnummer</th>
+            <th>starttid</th>
+            <th>sluttid</th>
+            <th>Sträcka(KM)</th>
+            <th>resetid</th>
+            <th>från</th>
+            <th>till</th>
+            <th>resetyp</th>
+            <th>liter</th>
+            <th>pris</th>
             <th>firstLat</th>
             <th>firstLon</th>
             <th>lastLat</th>
@@ -66,8 +72,10 @@
 }
 
 #customers td, #customers th {
-  border: 1px solid #ddd;
-  padding: 8px;
+    border: 1px solid #ddd;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    font-size: 0.85em;
 }
 
 #customers tr:nth-child(even){background-color: #f2f2f2;}

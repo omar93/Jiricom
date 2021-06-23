@@ -1,5 +1,6 @@
 <script>
-	import List from './components/list.svelte'
+	import List from './components/table.svelte'
+
 </script>
 
 <div class="main-grid">
@@ -7,6 +8,7 @@
 		<List></List>
 	</div>
 </div>
+
 
 <style>
 
