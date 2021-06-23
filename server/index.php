@@ -1,31 +1,12 @@
 <?php
-    $serverName = "localhost";
-    $userName = "root";
-    $password = "";
-    $dbname = "jiricom";
-
-    // Connection
-    $connection = new mysqli($serverName,$userName,$password,$dbname);
-    $connection->set_charset("utf8");
-
-
-    // Check connection health
-    if($connection->connect_error) {
-        die('Connection to database failed: ' . $connection->connect_error);
-    }
-
-    $sql = "SELECT * FROM routes WHERE licensePlate='MLB001'";
-
-    $result = $connection->query($sql);
-
-    if ($result->num_rows > 0) {
-
-        while($row = $result->fetch_assoc()) {
-            $emptyArray[] = $row;
-        }
-        echo json_encode($emptyArray);
-    } else {
-        echo "0 results";
-    }
-    $connection->close();
+    header('Acess-control-Allow-Origin: *');
+    header('Content-Type: application/json');
+    include('./connect.php');
+    $myObj = array(
+    'name' => "Omar",
+    'age' => 28,
+    'city' => "Stockholm"
+    );
+    $myJSON = json_encode($myObj);
+    echo $myJSON;
 ?>
