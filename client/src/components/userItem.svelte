@@ -1,8 +1,11 @@
 <script>
-    import { onMount } from 'svelte'
+    import { onMount,createEventDispatcher } from 'svelte'
+
     export let licensePlate = 'abc123'
+
     let items = []
     let url = 'http://localhost/jiricom/server/api/route/readPlates.php'
+    const dispatch = createEventDispatcher()
 
     onMount(async () => {
         try {
@@ -12,10 +15,15 @@
         } catch(err) {
             console.log(err)
         }
-    }) 
+    })
+
+    const handlePlateClick = e => {
+        let plate = e.path[0].textContent
+        dispatch('plate', plate)
+    }
 </script>
 
-<div class="itemContainer">
+<div class="itemContainer" on:click={handlePlateClick}>
     <p>{licensePlate}</p>
 </div>
 

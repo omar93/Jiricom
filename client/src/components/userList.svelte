@@ -26,7 +26,7 @@
     </form>
 
     {#each items as {licensePlate}}
-        <UserItem {licensePlate}></UserItem>
+        <UserItem {licensePlate} on:plate></UserItem>
     {/each}
 </div>
 

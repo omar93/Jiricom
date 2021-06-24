@@ -1,39 +1,42 @@
 <script>
 	import Table from './components/table.svelte'
-import UserList from './components/userList.svelte'
-	import userList from './components/userList.svelte'
+	import SearchBox from './components/searchbox.svelte'
+
+	let items = []
+	const handleSearch = e => items = e.detail.data
 
 </script>
 
 <div class="main-grid">
 	<div id="listContainer">
-		<UserList></UserList>
+		<SearchBox on:search={handleSearch}></SearchBox>
 	</div>
 	<div id="tableContainer">
-		<Table></Table>
+		<Table bind:items></Table>
 	</div>
 </div>
 
 
 <style>
-
 	.main-grid {
 		display: grid;
 		width: 100%;
 		height: 100%;
-		grid-template-columns: 150px 1fr;
+		grid-template-columns: 1fr 400px 1fr;
+		grid-template-rows: 80px 1fr;
 		grid-template-areas:
-		'list table';
+		'.	search	.'
+		'table	table	table';
 	}
 
 	#listContainer {
-		overflow-y: scroll;
-		grid-area: list;
+		grid-area: search;
+		
 	}
 
 	#tableContainer {
-		overflow-y: scroll;
 		grid-area: table;
+		overflow-y: scroll;
 	}
 
 </style>

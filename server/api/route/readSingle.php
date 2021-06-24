@@ -12,33 +12,48 @@
     // Initiate new car route.
     $route = new Route($db);
 
-    // Get the licensePlate
+     // Get ID
     $route->licensePlate = isset($_GET['licensePlate']) ? $_GET['licensePlate'] : die();
 
-    // Get route
-    $route->readSingle();
+    // Route query
+    $result = $route->readSingle();
+    // Get row count
+    $num = $result->rowCount();
 
-    // Create array
-    $route_item_arr = array(
-        'routeId' => $route->routeId,
-        'licensePlate' => $route->licensePlate,
-        'timeStart' =>date('F jS, Y h:i:s', strtotime($route->timeStart)),
-        'timeEnd' => date('F jS, Y h:i:s', strtotime($route->timeEnd)),
-        'distance' => $route->distance,
-        'travelTime' => gmdate("H:i:s", $route->travelTime),
-        'startAddress' => $route->startAddress,
-        'stopAddress' => $route->stopAddress,
-        'routeType' => $route->routeType,
-        'liters' => $route->liters,
-        'cost' => $route->cost,
-        'firstLat' => $route->firstLat,
-        'firstLon' => $route->firstLon,
-        'lastLat' => $route->lastLat,
-        'lastLon' => $route->lastLon,
-        'odometerStop' => $route->odometerStop,
-        'odometerStart' => $route->odometerStart
-    );
+    // Check to see if there are routes
+    if($num > 0) {
+        // Init array
+        $routes_arr = array();
+        $routes_arr['data'] = array();
 
-    // Make JSON
-    echo json_encode($route_item_arr);
+        while($row = $result->fetch(PDO::FETCH_ASSOC)) {
+            extract($row);
+            $route_item = array(
+                'routeId' => $routeId,
+                'licensePlate' => $licensePlate,
+                'timeStart' =>date('F jS, Y h:i:s', strtotime($timeStart)),
+                'timeEnd' => date('F jS, Y h:i:s', strtotime($timeEnd)),
+                'distance' => $distance,
+                'travelTime' => gmdate("H:i:s", $travelTime),
+                'startAddress' => $startAddress,
+                'stopAddress' => $stopAddress,
+                'routeType' => $routeType,
+                'liters' => $liters,
+                'cost' => $cost,
+                'firstLat' => $firstLat,
+                'firstLon' => $firstLon,
+                'lastLat' => $lastLat,
+                'lastLon' => $lastLon,
+                'odometerStop' => $odometerStop,
+                'odometerStart' => $odometerStart
+            );
+
+            // Push to 'data'
+            array_push($routes_arr['data'],$route_item);
+        }
+        // Turn it to json
+        echo json_encode($routes_arr);
+    } else {
+        echo 'No data';
+    }
 ?>
