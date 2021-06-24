@@ -8,7 +8,7 @@
     const rowClicked = e => {
         let startAddress = e.path[1].cells[6].textContent
         let stopAddress = e.path[1].cells[7].textContent
-        showModal = true
+        // showModal = true
     }
 
 function sortTable() {
