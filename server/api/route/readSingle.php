@@ -13,7 +13,10 @@
     $route = new Route($db);
 
      // Get ID
-    $route->licensePlate = isset($_GET['licensePlate']) ? $_GET['licensePlate'] : die();
+    $route->licensePlate = $_GET['licensePlate'];
+    
+    // Get Offset
+    $route->offset = $_GET['offset'];
 
     // Route query
     $result = $route->readSingle();

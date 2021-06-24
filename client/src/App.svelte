@@ -36,7 +36,6 @@
 
 	#tableContainer {
 		grid-area: table;
-		overflow-y: scroll;
 	}
 
 </style>

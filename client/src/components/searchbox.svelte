@@ -6,10 +6,14 @@
     let textField = ''
     const dispatch = createEventDispatcher()
 
+    
+    let offset = 0;
+
     const handleSubmit = async e => {
         e.preventDefault()
-        let data = await db.getSingleItem(`http://localhost/jiricom/server/api/route/readSingle.php?licensePlate=${textField}`)
+        let data = await db.getSingleItem(`http://localhost/jiricom/server/api/route/readSingle.php?licensePlate=${textField}&offset=${offset}`)
         dispatch('search', data)
+        offset += 13
     }
 
 </script>
