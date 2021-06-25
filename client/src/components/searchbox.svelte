@@ -1,20 +1,26 @@
 <script>
+    import { plateStore } from '../stores/plateStore'
+    import { pageStore } from '../stores/pageStore'
     import { createEventDispatcher } from 'svelte'
     import dbHandler from '../lib/database'
+    
 
     let db = new dbHandler()
     let textField = ''
+    let offset = 0
     const dispatch = createEventDispatcher()
-
-    
-    let offset = 0;
 
     const handleSubmit = async e => {
         e.preventDefault()
         let data = await db.getSingleItem(`http://localhost/jiricom/server/api/route/readSingle.php?licensePlate=${textField}&offset=${offset}`)
         dispatch('search', data)
-        offset += 13
+        plateStore.set(textField)
     }
+
+    pageStore.subscribe(data => {
+        offset = data
+        console.log('Offset is now: ', offset)
+    })  
 
 </script>
 

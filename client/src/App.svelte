@@ -4,6 +4,7 @@
 
 	let items = []
 	const handleSearch = e => items = e.detail.data
+	const newPage = e => items = e.detail.data
 
 </script>
 
@@ -12,7 +13,7 @@
 		<SearchBox on:search={handleSearch}></SearchBox>
 	</div>
 	<div id="tableContainer">
-		<Table bind:items></Table>
+		<Table bind:items on:newPage={newPage}></Table>
 	</div>
 </div>
 

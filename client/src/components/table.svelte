@@ -1,9 +1,20 @@
 <script>
+    import { plateStore } from '../stores/plateStore'
+    import { pageStore } from '../stores/pageStore'
+    import { createEventDispatcher } from 'svelte'
+    import dbHandler from '../lib/database'
 	import Modal from './modal.svelte'
 
     export let items = []
     
+    let db = new dbHandler()
     let showModal = false
+    let offset = 0
+    const dispatch = createEventDispatcher()
+    let plate =  plateStore
+
+    pageStore.subscribe(data => offset = data)
+    plateStore.subscribe(data => plate = data)
 
     const rowClicked = e => {
         let startAddress = e.path[1].cells[6].textContent
@@ -11,40 +22,20 @@
         // showModal = true
     }
 
-function sortTable() {
-  var table, rows, switching, i, x, y, shouldSwitch;
-  table = document.getElementById("customers")
-  switching = true;
-  /*Make a loop that will continue until
-  no switching has been done:*/
-  while (switching) {
-    //start by saying: no switching is done:
-    switching = false;
-    rows = table.rows;
-    /*Loop through all table rows (except the
-    first, which contains table headers):*/
-    for (i = 1; i < (rows.length - 1); i++) {
-      //start by saying there should be no switching:
-      shouldSwitch = false;
-      /*Get the two elements you want to compare,
-      one from current row and one from the next:*/
-      x = rows[i].getElementsByTagName("TD")[0];
-      y = rows[i + 1].getElementsByTagName("TD")[0];
-      //check if the two rows should switch place:
-      if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-        //if so, mark as a switch and break the loop:
-        shouldSwitch = true;
-        break;
-      }
+    const handleClickIncrease = async _ => {
+        offset += 13
+        pageStore.set(offset)
+        let data = await db.getSingleItem(`http://localhost/jiricom/server/api/route/readSingle.php?licensePlate=${plate}&offset=${offset}`)
+        dispatch('newPage', data)
     }
-    if (shouldSwitch) {
-      /*If a switch has been marked, make the switch
-      and mark that a switch has been done:*/
-      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-      switching = true;
+
+        const handleClickDecrease = async _ => {
+        offset -= 13
+        pageStore.set(offset)
+        let data = await db.getSingleItem(`http://localhost/jiricom/server/api/route/readSingle.php?licensePlate=${plate}&offset=${offset}`)
+        dispatch('newPage', data)
     }
-  }
-}
+
 </script>
     <Modal bind:showModal></Modal>
     <div class="tableContainer">
@@ -90,9 +81,10 @@ function sortTable() {
             
         
         <div class="buttonContainer">
-            <button> ← </button>
-            <span>1/5</span>
-            <button on:click={sortTable}> → </button>
+            <button on:click={() => handleClickDecrease()}>←</button>
+            <span>{offset/13}</span>
+            <button on:click={() => handleClickIncrease()}>→</button>
+            <!-- button on:click={sortTable}> → </button> -->
         </div>
 {/if}
     </div>
