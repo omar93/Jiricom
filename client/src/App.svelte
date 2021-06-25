@@ -23,8 +23,9 @@
 		display: grid;
 		width: 100%;
 		height: 100%;
+		margin: auto;
 		grid-template-columns: 1fr 400px 1fr;
-		grid-template-rows: 80px 1fr;
+		grid-template-rows: 50px 1fr;
 		grid-template-areas:
 		'.	search	.'
 		'table	table	table';

@@ -4,6 +4,7 @@
         private $conn;
         public $licensePlate;
         public $offset;
+        public $limit;
 
         //Conctructor
         public function __construct($db) {
@@ -44,7 +45,7 @@
         public function readSingle() {
 
             // create query
-            $query = "SELECT * FROM routes WHERE licensePlate='$this->licensePlate' ORDER BY timeStart DESC LIMIT 13 OFFSET $this->offset";
+            $query = "SELECT * FROM routes WHERE licensePlate='$this->licensePlate' ORDER BY timeStart DESC LIMIT $this->limit OFFSET $this->offset";
 
             // prepare query
             $stmt = $this->conn->prepare($query);

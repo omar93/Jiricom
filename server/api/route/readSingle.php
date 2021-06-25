@@ -18,8 +18,12 @@
     // Get Offset
     $route->offset = $_GET['offset'];
 
+    // Get Limit
+    $route->limit = $_GET['limit'];
+
     // Route query
     $result = $route->readSingle();
+    
     // Get row count
     $num = $result->rowCount();
 
