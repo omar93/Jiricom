@@ -1,6 +1,25 @@
 export default class dbhandler {
 
-  async getSingleItem(url) {
+  async getSingleItem(url,data) {
+    try {
+      let req = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+      })
+      let data = await req.json()
+      console.log(data)
+      return data
+    } catch (error) {
+      console.log('DB ERROR:')
+      console.log(error)
+      alert('There was a problem loading the data\nmake sure you searched for the correct licenseplate')
+    }
+  }
+
+  async readSearch(url) {
     try {
       let req = await fetch(url)
       let data = await req.json()

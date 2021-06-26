@@ -5,6 +5,8 @@
         public $licensePlate;
         public $offset;
         public $limit;
+        public $startDate;
+        public $endDate;
 
         //Conctructor
         public function __construct($db) {
@@ -46,6 +48,23 @@
 
             // create query
             $query = "SELECT * FROM routes WHERE licensePlate='$this->licensePlate' ORDER BY timeStart DESC LIMIT $this->limit OFFSET $this->offset";
+
+            // prepare query
+            $stmt = $this->conn->prepare($query);
+
+            //Excecute query
+            $stmt->execute();
+
+            // Return query
+            return $stmt;
+        }
+
+        public function readSearch() {
+            // create query
+            $query = 
+            "SELECT * FROM routes 
+            WHERE licensePlate='$this->licensePlate' &&
+            timeStart between $this->startDate and $this->endDate";
 
             // prepare query
             $stmt = $this->conn->prepare($query);

@@ -1,22 +1,20 @@
 <script>
-	import Table from './components/table.svelte'
-	import SearchBox from './components/searchbox.svelte'
+	import Table from "./components/table.svelte";
+	import SearchBox from "./components/searchbox.svelte";
 
-	let items = []
-	const handleSearch = e => items = e.detail.data
-	const newPage = e => items = e.detail.data
-
+	let items = [];
+	const handleSearch = (e) => (items = e.detail.data);
+	const newPage = (e) => (items = e.detail.data);
 </script>
 
 <div class="main-grid">
 	<div id="listContainer">
-		<SearchBox on:search={handleSearch}></SearchBox>
+		<SearchBox on:search={handleSearch} />
 	</div>
 	<div id="tableContainer">
-		<Table bind:items on:newPage={newPage}></Table>
+		<Table bind:items on:newPage={newPage} />
 	</div>
 </div>
-
 
 <style>
 	.main-grid {
@@ -27,17 +25,15 @@
 		grid-template-columns: 1fr 400px 1fr;
 		grid-template-rows: 50px 1fr;
 		grid-template-areas:
-		'.	search	.'
-		'table	table	table';
+			".	search	."
+			"table	table	table";
 	}
 
 	#listContainer {
 		grid-area: search;
-		
 	}
 
 	#tableContainer {
 		grid-area: table;
 	}
-
 </style>

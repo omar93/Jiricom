@@ -1,31 +1,60 @@
 <script>
-    import { plateStore } from "../stores/plateStore";
-    import { pageStore } from "../stores/pageStore";
-    import { createEventDispatcher } from "svelte";
-    import dbHandler from "../lib/database";
+    import { plateStore } from "../stores/plateStore"
+    import { pageStore } from "../stores/pageStore"
+    import { createEventDispatcher } from "svelte"
+    import dbHandler from "../lib/database"
 
-    let db = new dbHandler();
-    let textField = "";
-    let offset = 0;
-    let limit = 17;
-    const dispatch = createEventDispatcher();
+    let db = new dbHandler()
+    let textField = ''
+    let startDate
+    let endDate
+    let offset = 0
+    let limit = 17
+    const dispatch = createEventDispatcher()
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        let data = await db.getSingleItem(
-            `http://localhost/jiricom/server/api/route/readSingle.php?licensePlate=${textField}&offset=${offset}&limit=${limit}`
-        );
-        dispatch("search", data);
-        plateStore.set(textField);
-    };
+        e.preventDefault()
+        /*
+        let body = {
+            startDate: startDate.split('-').join('')+'000000',
+            endDate: endDate.split('-').join('')+'000000',
+            textField: textField
+        }
+        */
+
+        let body = {
+            startDate: '20200101000000',
+            endDate: '20200401000000',
+            textField: textField
+        }
+        let data = await db.readSearch(
+            `http://localhost/jiricom/server/api/route/readSearch.php?
+            startDate=2020010100000&
+            endDate=20200130000000&
+            licensePlate=MLB001`
+        )
+        dispatch("search", data)
+        plateStore.set(textField)
+    }
 
     pageStore.subscribe((data) => {
-        offset = data;
-        console.log("Offset is now: ", offset);
-    });
+        offset = data
+        console.log("Offset is now: ", offset)
+    })
 </script>
 
 <form on:submit={handleSubmit}>
+    <script>
+    </script>
+
+    <div id="dateContainer">
+        From<input type="date" bind:value={startDate} /><br />
+        To<input type="date" bind:value={endDate} />
+    </div>
+
+    <style>
+    </style>
+
     <input
         type="text"
         name="licensePlate"

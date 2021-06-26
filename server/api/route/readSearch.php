@@ -12,18 +12,18 @@
     // Initiate new car route.
     $route = new Route($db);
 
-     // Get ID
+    // Get ID
     $route->licensePlate = $_GET['licensePlate'];
-    
-    // Get Offset
-    $route->offset = $_GET['offset'];
 
-    // Get Limit
-    $route->limit = $_GET['limit'];   
+    // Get ID
+    $route->startDate = $_GET['startDate'];
+
+    // Get ID
+    $route->endDate = $_GET['endDate'];
 
     // Route query
-    $result = $route->readSingle();
-    
+    $result = $route->readSearch();
+
     // Get row count
     $num = $result->rowCount();
 
@@ -38,8 +38,8 @@
             $route_item = array(
                 'routeId' => $routeId,
                 'licensePlate' => $licensePlate,
-                'timeStart' =>date('F jS, Y h:i:s', strtotime($timeStart)),
-                'timeEnd' => date('F jS, Y h:i:s', strtotime($timeEnd)),
+                'timeStart' =>date('Y-m-d D H:i:s', strtotime($timeStart)),
+                'timeEnd' => date('Y-m-d D H:i:s', strtotime($timeEnd)),
                 'distance' => $distance,
                 'travelTime' => gmdate("H:i:s", $travelTime),
                 'startAddress' => $startAddress,
