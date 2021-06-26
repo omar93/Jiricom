@@ -1,3 +1,13 @@
-<script></script>
+<script>
+    import Chart from 'chart.js/auto'
 
-<style></style>
+    
+</script>
+
+
+<canvas>
+
+</canvas>
+
+<style>
+</style>

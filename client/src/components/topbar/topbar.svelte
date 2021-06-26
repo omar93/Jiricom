@@ -3,7 +3,7 @@
 </script>
 
 <div class="topBarContainer">
-    <p>topbar</p>
+    <p>Userpanel</p>
 </div>
 
 <style>

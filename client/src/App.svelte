@@ -3,6 +3,10 @@
 	import Topbar from './components/topbar/topbar.svelte'
 	import Graph from './components/main/graph.svelte'
 	import Table from './components/main/table.svelte'
+	import {dataStore} from './stores/dataStore'
+
+	let length = 0
+	dataStore.subscribe(data => length = data.data.length)
 </script>
 
 <div class="container">
@@ -16,10 +20,13 @@
 	</div>
 
 	<div class="main-grid">
-
-		<div class="tableContainer">
-			<Table/>
-		</div>
+		
+			<div class="tableContainer">
+				{#if length > 0} 
+					<Table/>
+				{/if}
+			</div>
+		
 
 		<div class="graphContainer">
 			<Graph/>
@@ -37,20 +44,18 @@
 		grid-template-columns: 1fr 5fr;
 		grid-template-rows: 50px 1fr;
 		grid-template-areas:
-			"topbar	  topbar  topbar"
-			"sidebar  main	  main";
+		"topbar	  topbar  topbar"
+		"sidebar  main	  main";
 	}
 
 	.topBar {
 		grid-area: topbar;
-		border: 1px solid red;
 		position: sticky;
 		top: 0;
 	}
 
 	.sideBar {
 		grid-area: sidebar;
-		border: 1px solid red;
 		position: sticky;
 		top: 0;
 	}
@@ -58,37 +63,25 @@
 	.main-grid {
 		overflow-y: hidden;
 		display: grid;
-		width: 100%;
-		height: 100%;
-		grid-template-columns: repeat(4,1fr);
-		grid-template-rows: 150px 1fr;
+		gap: 10px;
+		grid-template-columns: 300px 1fr 25px;
+		grid-template-rows: 200px 1fr 25px;
 		grid-template-areas:
-		'top top top top'
-		'table table graph graph'
-	}
-
-	/* width */
-	::-webkit-scrollbar {
-	width: 10px;
-	}
-
-	/* Track */
-	::-webkit-scrollbar-track {
-	background: #f1f1f1; 
-	}
-	
-	/* Handle */
-	::-webkit-scrollbar-thumb {
-	background: #888; 
-	}
-
-	/* Handle on hover */
-	::-webkit-scrollbar-thumb:hover {
-	background: #555; 
+		'widget graph .'
+		'widget2 table .'
+		'. . .'
 	}
 
 	.tableContainer {
 		overflow-y: scroll;
 		grid-area: table;
+        -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+        box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+	}
+
+	.graphContainer {
+		grid-area: graph;
+        -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+        box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
 	}
 </style>

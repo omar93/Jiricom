@@ -30,17 +30,15 @@
 
 <style>
     *{
-        font-size: 12px;
+        font-size: 13px;
     }
     .tableContainer {
+        padding: 20px;
         display: grid;
-        width: 100%;
-        height: 100%;
         grid-template-rows: 90% 10%;
         grid-template-columns: 1fr;
         grid-template-areas:
-            "table"
-            "buttons";
+        "table";
     }
 
     #customers {
