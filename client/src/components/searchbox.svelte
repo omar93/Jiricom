@@ -14,24 +14,14 @@
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        /*
-        let body = {
-            startDate: startDate.split('-').join('')+'000000',
-            endDate: endDate.split('-').join('')+'000000',
-            textField: textField
-        }
-        */
+        startDate = startDate.split('-').join('')+'000000'
+        endDate = endDate.split('-').join('')+'000000'
 
-        let body = {
-            startDate: '20200101000000',
-            endDate: '20200401000000',
-            textField: textField
-        }
         let data = await db.readSearch(
             `http://localhost/jiricom/server/api/route/readSearch.php?
-            startDate=2020010100000&
-            endDate=20200130000000&
-            licensePlate=MLB001`
+            startDate=${startDate}&
+            endDate=${endDate}&
+            licensePlate=${textField}`
         )
         dispatch("search", data)
         plateStore.set(textField)
