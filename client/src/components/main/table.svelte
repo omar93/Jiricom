@@ -10,7 +10,7 @@
     <table id="customers">
         {#if items.length != 0}
             <tr>
-                {#each [...Object.keys(items[0])].slice(2, 11) as key}
+                {#each [...Object.keys(items[0])].slice(2, 9) as key}
                     <th> {key} </th>
                 {/each}
             </tr>
@@ -19,7 +19,7 @@
         {#if items.length != 0}
             {#each items as item}
                 <tr>
-                    {#each [...Object.values(item)].slice(2, 11) as [...columnItem]}
+                    {#each [...Object.values(item)].slice(2, 9) as [...columnItem]}
                         <td>{columnItem}</td>
                     {/each}
                 </tr>
@@ -64,9 +64,10 @@
     #customers th {
         padding-top: 15px;
         padding-bottom: 15px;
-        text-align: left;
         background-color: #04aa6d;
         color: white;
+        padding-left: 10px;
+        padding-right: 10px;
     }
 
     th {

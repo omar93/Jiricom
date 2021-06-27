@@ -1,14 +1,30 @@
 <script>
+    import { dataStore } from '../../stores/dataStore'
     import Chart from 'chart.js/auto'
+    import { onMount } from 'svelte'
+
     let ctx
+
+    let graphData
+    let totalCost = 0
+
+    dataStore.subscribe(data => {
+        graphData = data.data
+        graphData.forEach(data => {
+            console.log(data)
+            totalCost += parseFloat(data.cost)
+        })
+        console.log(`Total Bensin kostnad: ${Math.round(totalCost)}kr`)
+    })
     
-    let myChart = new Chart(ctx, {
+    onMount(() => {
+    new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Maj', 'Juni','Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec'],
         datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
+            label: 'Bensinkostnad för varje månad',
+            data: [12, 19, 3, 5, 2, 3], // Hämta data från mysql
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -36,6 +52,8 @@
         }
     }
 });
+    })
+
 </script>
 
 

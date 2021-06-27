@@ -1,8 +1,8 @@
 <script>
 	import Sidebar from './components/sidebar/sidebar.svelte'
-	import Topbar from './components/topbar/topbar.svelte'
-	import Graph from './components/main/graph.svelte'
+	import Circle from './components/main/circle.svelte'
 	import Table from './components/main/table.svelte'
+	import Graph from './components/main/bar.svelte'
 	import {dataStore} from './stores/dataStore'
 
 	let length = 0
@@ -28,7 +28,7 @@
 			<Graph/>
 		</div>
 
-		<div class="widget1 style">widget 1</div>
+		<div class="widget1 style"><Circle/></div>
 		<div class="widget2 style">widget 2</div>
 		<div class="widget3 style">widget 3</div>
 		
@@ -58,7 +58,7 @@
 		row-gap: 10px;
 		column-gap: 10px;
 		grid-template-columns: 10px 300px 1fr 10px;
-		grid-template-rows: 10px 1fr 1fr 1fr 10px;
+		grid-template-rows: 10px 300px 100px 1fr 10px;
 		grid-template-areas:
 		'. . . .'
 		'. widget1 table .'
