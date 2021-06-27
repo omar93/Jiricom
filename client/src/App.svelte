@@ -21,17 +21,22 @@
 
 	<div class="main-grid">
 		
-			<div class="tableContainer">
-				{#if length > 0} 
-					<Table/>
+			<div class="tableContainer style">
+				{#if length > 0}
+				<div class="wrapper"><Table/></div>
+					
 				{/if}
 			</div>
 		
 
-		<div class="graphContainer">
+		<div class="graphContainer style">
 			<Graph/>
 		</div>
 
+		<div class="widget1 style">widget 1</div>
+		<div class="widget2 style">widget 2</div>
+		<div class="widget3 style">widget 3</div>
+		
 	</div>
 
 </div>
@@ -42,7 +47,7 @@
 		width: 100%;
 		height: 100%;
 		grid-template-columns: 1fr 5fr;
-		grid-template-rows: 50px 1fr;
+		grid-template-rows: 70px 1fr;
 		grid-template-areas:
 		"topbar	  topbar  topbar"
 		"sidebar  main	  main";
@@ -64,24 +69,32 @@
 		overflow-y: hidden;
 		display: grid;
 		gap: 10px;
-		grid-template-columns: 300px 1fr 25px;
-		grid-template-rows: 200px 1fr 25px;
+		grid-template-columns: 300px 1fr;
+		grid-template-rows: 1fr 1fr 200px 10px;
 		grid-template-areas:
-		'widget graph .'
-		'widget2 table .'
-		'. . .'
+		'widget1 table'
+		'widget2 table'
+		'widget3 graph'
+		'.	.';
 	}
-
-	.tableContainer {
-		overflow-y: scroll;
-		grid-area: table;
-        -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
-        box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
-	}
-
 	.graphContainer {
 		grid-area: graph;
-        -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
-        box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+	}
+	.tableContainer {
+		grid-area: table;
+		overflow-y: scroll;
+		border: 1px solid black;
+		padding: 0;
+		margin: 0;
+	}
+
+	.widget1 {
+		grid-area: widget1;
+	}
+
+	.style {
+		-webkit-box-shadow: -4px -4px 20px -15px #000000; 
+		box-shadow: -4px -4px 20px -15px #000000;
+		border: 1px solid rgba(0, 0, 0, 0.438);
 	}
 </style>

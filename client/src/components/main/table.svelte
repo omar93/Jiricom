@@ -30,15 +30,7 @@
 
 <style>
     *{
-        font-size: 13px;
-    }
-    .tableContainer {
-        padding: 20px;
-        display: grid;
-        grid-template-rows: 90% 10%;
-        grid-template-columns: 1fr;
-        grid-template-areas:
-        "table";
+        font-size: 15px;
     }
 
     #customers {
@@ -50,10 +42,10 @@
 
     #customers td,
     #customers th {
-        border: 1px solid #ddd;
-        padding-top: 12px;
-        padding-bottom: 12px;
+        padding-top: 10px;
+        padding-bottom: 10px;
         font-size: 0.85em;
+        border: 1px solid #ddd;
     }
 
     #customers tr:nth-child(even) {
@@ -65,8 +57,8 @@
     }
 
     #customers th {
-        padding-top: 12px;
-        padding-bottom: 12px;
+        padding-top: 15px;
+        padding-bottom: 15px;
         text-align: left;
         background-color: #04aa6d;
         color: white;
@@ -74,8 +66,7 @@
 
     th {
         position: sticky;
-        top: 0;
-        padding: 10px;
+        top: -1px;
         height: 10px;
     }
 </style>

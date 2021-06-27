@@ -65,7 +65,8 @@ button:focus {
 /* width */
 ::-webkit-scrollbar {
 	width: 10px;
-	}
+	border-radius: 25px;
+}
 
 /* Track */
 ::-webkit-scrollbar-track {

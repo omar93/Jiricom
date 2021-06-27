@@ -10,5 +10,6 @@
     .topBarContainer {
         display: flex;
         align-items: center;
+        background-color: rgb(172, 167, 169);
     }
 </style>
