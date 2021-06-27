@@ -11,22 +11,17 @@
 
 <div class="container">
 
-	<div class="topBar">
-		<Topbar/>
-	</div>
-	
-	<div class="sideBar">
+	<div class="sideBarContainer">
 		<Sidebar/>
 	</div>
 
 	<div class="main-grid">
 		
-			<div class="tableContainer style">
-				{#if length > 0}
-				<div class="wrapper"><Table/></div>
-					
-				{/if}
-			</div>
+		<div class="tableContainer style">
+			{#if length > 0}
+				<Table/>
+			{/if}
+		</div>
 		
 
 		<div class="graphContainer style">
@@ -42,59 +37,57 @@
 </div>
 
 <style>
+	div {
+		background-color: white;
+	}
 	.container{
-		display: grid;
+		display: flex;
 		width: 100%;
 		height: 100%;
-		grid-template-columns: 1fr 5fr;
-		grid-template-rows: 70px 1fr;
-		grid-template-areas:
-		"topbar	  topbar  topbar"
-		"sidebar  main	  main";
+		
 	}
 
-	.topBar {
-		grid-area: topbar;
-		position: sticky;
-		top: 0;
+	.sideBarContainer {
+		flex: 1;
 	}
-
-	.sideBar {
-		grid-area: sidebar;
-		position: sticky;
-		top: 0;
-	}
-
 	.main-grid {
-		overflow-y: hidden;
+		flex: 8;
+		background-color: #F4F6F9;
+		overflow-y: scroll;
 		display: grid;
-		gap: 10px;
-		grid-template-columns: 300px 1fr;
-		grid-template-rows: 1fr 1fr 200px 10px;
+		row-gap: 10px;
+		column-gap: 10px;
+		grid-template-columns: 10px 300px 1fr 10px;
+		grid-template-rows: 10px 1fr 1fr 1fr 10px;
 		grid-template-areas:
-		'widget1 table'
-		'widget2 table'
-		'widget3 graph'
-		'.	.';
+		'. . . .'
+		'. widget1 table .'
+		'. widget2 table .'
+		'. widget3 graph .'
+		'. . . .';
+	}
+
+	.main-grid > div {
+		border-radius: 5px;
 	}
 	.graphContainer {
 		grid-area: graph;
 	}
 	.tableContainer {
 		grid-area: table;
-		overflow-y: scroll;
-		border: 1px solid black;
-		padding: 0;
-		margin: 0;
+		overflow-y: hidden;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 
 	.widget1 {
 		grid-area: widget1;
 	}
-
-	.style {
-		-webkit-box-shadow: -4px -4px 20px -15px #000000; 
-		box-shadow: -4px -4px 20px -15px #000000;
-		border: 1px solid rgba(0, 0, 0, 0.438);
+	.widget2 {
+		grid-area: widget2;
+	}
+	.widget3 {
+		grid-area: widget3;
 	}
 </style>

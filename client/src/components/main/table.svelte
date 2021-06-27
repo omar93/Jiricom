@@ -33,11 +33,16 @@
         font-size: 15px;
     }
 
+    .tableContainer {
+        width: 95%;
+        max-height: 95%;
+        overflow-y: scroll;
+    }
+
     #customers {
         font-family: Arial, Helvetica, sans-serif;
         border-collapse: collapse;
         width: 100%;
-        max-height: 100%;
     }
 
     #customers td,
