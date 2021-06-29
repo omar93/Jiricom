@@ -1,13 +1,12 @@
 export default class dbhandler {
 
-  async getSingleItem(url,data) {
+  async getSingleItem(url) {
     try {
       let req = await fetch(url, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data)
+        }
       })
       let data = await req.json()
       console.log(data)

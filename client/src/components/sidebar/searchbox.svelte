@@ -13,17 +13,7 @@
    
     const handleSubmit = async (e) => {
         e.preventDefault()
-
-        let start = startDate.split('-').join('')+'000000'
-        let end = endDate.split('-').join('')+'000000'
-
-        let data = await db.readSearch(
-            `http://localhost/jiricom/server/api/route/readSearch.php?
-            startDate=${start}&
-            endDate=${end}&
-            licensePlate=${textField}`
-        )
-        
+        let data = await db.readSearch(`http://localhost/jiricom/server/api/route/readUser.php?licensePlate=${textField}`)
         dataStore.set(data)
         plateStore.set(textField)
     }

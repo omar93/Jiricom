@@ -3,10 +3,7 @@
 	import Circle from './components/main/circle.svelte'
 	import Table from './components/main/table.svelte'
 	import Graph from './components/main/bar.svelte'
-	import {dataStore} from './stores/dataStore'
-
-	let length = 0
-	dataStore.subscribe(data => length = data.data.length)
+	import Map from './components/main/map.svelte'
 </script>
 
 <div class="container">
@@ -18,9 +15,7 @@
 	<div class="main-grid">
 		
 		<div class="tableContainer style">
-			{#if length > 0}
-				<Table/>
-			{/if}
+			<Table/>
 		</div>
 		
 
@@ -29,8 +24,12 @@
 		</div>
 
 		<div class="widget1 style"><Circle/></div>
-		<div class="widget2 style">widget 2</div>
-		<div class="widget3 style">widget 3</div>
+		<div class="widget2 style">2</div>
+		<div class="widget3 style"></div>
+
+		<div class="mapContainer">
+			<Map/>
+		</div>
 		
 	</div>
 
@@ -38,7 +37,7 @@
 
 <style>
 	div {
-		background-color: white;
+		background-color: rgb(255, 255, 255);
 	}
 	.container{
 		display: flex;
@@ -57,14 +56,14 @@
 		display: grid;
 		row-gap: 10px;
 		column-gap: 10px;
-		grid-template-columns: 10px 300px 1fr 10px;
+		grid-template-columns: 10px 250px 1fr 800px 10px;
 		grid-template-rows: 10px 300px 100px 1fr 10px;
 		grid-template-areas:
-		'. . . .'
-		'. widget1 table .'
-		'. widget2 table .'
-		'. widget3 graph .'
-		'. . . .';
+		'. . . . .'
+		'. widget1 table table .'
+		'. widget2 table table .'
+		'. widget3 graph map .'
+		'. . . . .';
 	}
 
 	.main-grid > div {
@@ -80,7 +79,9 @@
 		justify-content: center;
 		align-items: center;
 	}
-
+	.mapContainer {
+		grid-area:map;
+	}
 	.widget1 {
 		grid-area: widget1;
 	}

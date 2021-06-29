@@ -1,30 +1,60 @@
 <script>
+    import { priceStore } from '../../stores/priceStore'
     import { dataStore } from '../../stores/dataStore'
     import Chart from 'chart.js/auto'
     import { onMount } from 'svelte'
 
     let ctx
+    let chart
 
     let graphData
     let totalCost = 0
+    let currentMonth
+    let prevMonth
+    let allCosts = []
 
     dataStore.subscribe(data => {
         graphData = data.data
         graphData.forEach(data => {
-            console.log(data)
+            currentMonth = data.timeStart.split(' ')[0]
+            if(currentMonth != prevMonth) {
+                let obj = {
+                    'month':prevMonth,
+                    'cost':totalCost
+                }
+                allCosts.push(obj)
+                totalCost = 0
+                currentMonth = ''
+            }
             totalCost += parseFloat(data.cost)
+            prevMonth = data.timeStart.split(' ')[0]
         })
-        console.log(`Total Bensin kostnad: ${Math.round(totalCost)}kr`)
+        priceStore.set(allCosts)
     })
+
+    priceStore.subscribe(data => {
+        let month = data.map(item => item.month)
+        let cost = data.map(item => item.cost)
+        console.log(data)
+        if(allCosts.length > 0) {
+            chart.data.labels = [...month]
+            chart.data.datasets[0].data = [...cost]
+            chart.update()
+        }
+
+    })
+
     
     onMount(() => {
-    new Chart(ctx, {
+    chart = new Chart(ctx, {
     type: 'bar',
     data: {
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Maj', 'Juni','Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec'],
         datasets: [{
             label: 'Bensinkostnad för varje månad',
-            data: [12, 19, 3, 5, 2, 3], // Hämta data från mysql
+            data: 
+            [120, 19, 3, 5, 2, 3]
+            ,
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -57,9 +87,10 @@
 </script>
 
 
-<canvas id="myChart" bind:this={ctx}>
-
-</canvas>
+<canvas id="myChart" bind:this={ctx} width="400"></canvas>
 
 <style>
+    #myChart {
+        height: 100%;
+    }
 </style>

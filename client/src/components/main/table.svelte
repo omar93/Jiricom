@@ -2,6 +2,16 @@
     import { dataStore } from "../../stores/dataStore"
 
     let items = []
+    let mockItems = [
+        'timeStart',
+        'timeEnd',
+        'distancest',
+        'travelTime',
+        'startAddress',
+        'stopAddress'
+    ]
+
+    let cell = 'cell'
     dataStore.subscribe(data => items = data.data)
 
 </script>
@@ -10,19 +20,35 @@
     <table id="customers">
         {#if items.length != 0}
             <tr>
-                {#each [...Object.keys(items[0])].slice(2, 9) as key}
+                {#each [...Object.keys(items[0])].slice(2, 8) as key}
                     <th> {key} </th>
                 {/each}
             </tr>
+        {:else}
+        <tr>
+            {#each mockItems as head}
+                <th>{head}</th>
+            {/each}
+        </tr>
         {/if}
 
         {#if items.length != 0}
             {#each items as item}
                 <tr>
-                    {#each [...Object.values(item)].slice(2, 9) as [...columnItem]}
+                    {#each [...Object.values(item)].slice(2, 8) as [...columnItem]}
                         <td>{columnItem}</td>
                     {/each}
                 </tr>
+            {/each}
+        {:else}
+        
+            {#each {length:8} as apa}
+            <tr>
+                {#each mockItems as item}
+                    <td>{item}</td>
+                {/each}
+            </tr>
+                
             {/each}
         {/if}
     </table>
