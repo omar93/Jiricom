@@ -1,5 +1,6 @@
 <script>
     import { plateStore } from "../../stores/plateStore"
+    import { priceStore } from '../../stores/priceStore'
     import { pageStore } from "../../stores/pageStore"
     import { dataStore } from "../../stores/dataStore"
     import dbHandler from "../../lib/database"
@@ -10,12 +11,19 @@
     let endDate = '9999-99-99'
     let offset = 0
     let limit = 17
-   
+    let plate = 'abc 123'
+    
+
     const handleSubmit = async (e) => {
+        dataStore.set({'data':[]})
+        priceStore.set([])
+        console.log('after reset: ', $priceStore)
+        plateStore.set('')
         e.preventDefault()
         let data = await db.readSearch(`http://localhost/jiricom/server/api/route/readUser.php?licensePlate=${textField}`)
         dataStore.set(data)
-        plateStore.set(textField)
+        plate = textField
+
     }
 
     pageStore.subscribe((data) => {
