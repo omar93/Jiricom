@@ -50,7 +50,6 @@
             chart.update()
         })
     })
-
 </script>
 
 

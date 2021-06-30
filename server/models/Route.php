@@ -59,6 +59,21 @@
             return $stmt;
         }
 
+        public function readFullUser() {
+
+            // create query
+            $query = "SELECT * FROM routes WHERE licensePlate='$this->licensePlate' ORDER BY timeStart ASC";
+
+            // prepare query
+            $stmt = $this->conn->prepare($query);
+
+            //Excecute query
+            $stmt->execute();
+
+            // Return query
+            return $stmt;
+        }
+
         public function readSearch() {
             // create query
             $query = 

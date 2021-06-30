@@ -1,2 +1,2 @@
 import { writable } from 'svelte/store'
-export const priceStore = writable([])
+export const widgetStore = writable([])
