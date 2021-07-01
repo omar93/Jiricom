@@ -42,7 +42,7 @@
             {/each}
         {:else}
         
-            {#each {length:8} as apa}
+            {#each {length:12} as apa}
             <tr>
                 {#each mockItems as item}
                     <td>{item}</td>

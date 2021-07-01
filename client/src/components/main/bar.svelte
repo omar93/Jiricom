@@ -108,10 +108,7 @@
 </script>
 
 
-<canvas id="myChart" bind:this={ctx} width="400"></canvas>
+<canvas id="myChart" bind:this={ctx}></canvas>
 
 <style>
-    #myChart {
-        height: 100%;
-    }
 </style>

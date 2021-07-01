@@ -16,26 +16,32 @@
 
 	<div class="main-grid">
 		
-		<div class="tableContainer style">
-			<Table/>
+		<div class="top-main">
+
+			<div class="widgetContainer">
+				<div><Circle/></div>
+				<div><Price/></div>
+				<div><Distance/></div>
+			</div>
+
+			<div class="tableContainer style">
+				<Table/>
+			</div>
+	
+
 		</div>
+
 		
+		<div class="barContainer">
 
-		<div class="graphContainer style">
-			<Graph/>
+			<div class="barContainerPrice style">
+				<Graph/>
+			</div>
+			<div class="barContainerDistance style">
+				<Graph/>
+			</div>
+
 		</div>
-
-		<div class="widgetContainer">
-			<div class="style"><Circle/></div>
-			<div class="style"><Price/></div>
-			<div class="style"><Distance/></div>
-		</div>
-
-
-		<div class="mapContainer">
-			<Map/>
-		</div>
-		
 	</div>
 
 </div>
@@ -50,34 +56,39 @@
 		height: 100%;
 		
 	}
-
-	.sideBarContainer {
-		flex: 1;
-	}
 	.main-grid {
-		flex: 8;
+		flex: 1;
 		background-color: #F4F6F9;
 		overflow-y: scroll;
-		display: grid;
-		row-gap: 10px;
-		column-gap: 10px;
-		grid-template-columns: 10px 250px 1fr 800px 10px;
-		grid-template-rows: 10px 300px 100px 1fr 10px;
-		grid-template-areas:
-		'. . . . .'
-		'. widget table table .'
-		'. widget table table .'
-		'. widget graph map .'
-		'. . . . .';
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+
+	.top-main {
+		background-color: #F4F6F9;
+		display: flex;
+		gap: 10px;
+		padding: 10px;
 	}
 
 	.main-grid > div {
 		border-radius: 5px;
 	}
-	.graphContainer {
-		grid-area: graph;
+	.barContainer {
+		background-color: #F4F6F9;
+		grid-area: bar;
+		display: flex;
+		gap: 10px;
+		padding:10px;
+		padding-top:0px
+	}
+
+	.barContainer > * {
+		flex: 1;
 	}
 	.tableContainer {
+		flex: 1;
 		grid-area: table;
 		overflow-y: hidden;
 		display: flex;
@@ -93,9 +104,10 @@
 		display: flex;
 		flex-direction: column;
 		gap: 10px;
+		justify-content: space-between;
 	}
 
 	.widgetContainer > div {
-		min-height: 150px;
+		flex: 1;
 	}
 </style>
