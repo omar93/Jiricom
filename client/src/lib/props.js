@@ -1,0 +1,136 @@
+import { korvStore } from '../stores/korvStore'
+import { dataStore } from '../stores/dataStore'
+import { plateStore } from '../stores/plateStore'
+import { widgetStore } from '../stores/widgetStore'
+
+export default class propHandler {
+
+    data = {
+        'totalCost':0,
+        'totalDistance':0,
+        'costMonth':0,
+        'distanceMonth':0,
+        'odometerStop':0,
+        'licensePlate':'abc123',
+        type: {
+            'privat':0,
+            'tjanst':0
+        }
+    }
+
+    newSearch() {
+        dataStore.set({'data':[]})
+        widgetStore.set([])
+        plateStore.set('')
+    }
+
+    recordData(data,plate) {
+        this.allData = data
+        this.plateNumber = plate
+        this.formatData()
+    }
+
+    formatData() {
+        let totalCost = 0
+        let totalDistance = 0
+        let currentMonth = ''
+        let allCosts = []
+        let type = {
+            'privat':0,
+            'tjanst':0,
+            'kund':0,
+            'annat':0
+        }
+        let graphData = this.allData.data
+        graphData.forEach((data,i) => {
+            // First month
+            if(currentMonth.length === 0) {
+                currentMonth = data.timeStart.split(' ')[0]
+            }
+        
+            // Month change
+            if(currentMonth != data.timeStart.split(' ')[0]) {
+                let obj = {
+                    'month':currentMonth,
+                    'cost':totalCost,
+                    'distance':totalDistance,
+                    'type':type
+                }
+                allCosts.push(obj)
+                totalCost = 0
+                totalDistance = 0
+                currentMonth = data.timeStart.split(' ')[0]
+            }
+            // Last month
+            if(graphData.length === i+1) {
+                let obj = {
+                    'month':currentMonth,
+                    'cost':totalCost,
+                    'distance':totalDistance,
+                    'type':type
+                }
+                allCosts.push(obj)
+            }
+            let intx = parseInt(data.odometerStop)
+            let inty = parseInt(this.data.odometerStop)
+            if(intx > inty) this.data.odometerStop = intx
+            totalCost += parseFloat(data.cost)
+            totalDistance += parseFloat(data.distance)
+            if(data.routeType === 'Tjänsteres') type.tjanst++
+            if(data.routeType === 'Privatresa') type.privat++
+            if(data.routeType === 'Kundresa') type.kund++
+            if(data.routeType === '2' && data.routeType === '5') type.annat++
+            this.data.type = type
+            this.data.licensePlate = data.licensePlate
+        
+        })
+        widgetStore.set(allCosts)
+        this.setTotalCost(allCosts)
+        this.setTotalDistance(allCosts)
+        this.setCostMonth(allCosts)
+        this.setDistanceMonth(allCosts)
+        korvStore.set([this.data])
+    }
+
+    setCostMonth(dataArr) {
+        let costMonth = []
+        dataArr.forEach(item => {
+            costMonth.push({
+                'month':item.month,
+                'cost': item.cost
+            })
+        })
+        this.data.costMonth = costMonth
+    }
+
+    setDistanceMonth(dataArr) {
+        let distanceMonth = []
+        dataArr.forEach(item => {
+            distanceMonth.push({
+                'month':item.month,
+                'distance': item.distance
+            })
+        })
+        this.data.distanceMonth = distanceMonth
+    }
+
+    setTotalDistance(dataArr) {
+        let totalDistance = 0
+        dataArr.forEach(item => {
+            totalDistance += item.distance
+        })
+        this.data.totalDistance = parseFloat(totalDistance)
+    }
+
+    setTotalCost(dataArr) {
+        let totalCost = 0
+        dataArr.forEach(item => {
+            totalCost += parseFloat(item.cost)
+        })
+        this.data.totalCost = totalCost
+    }
+
+    getAllData() {
+        return this.data
+    }
+}

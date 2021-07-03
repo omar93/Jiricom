@@ -8,7 +8,6 @@
         widgetStore.subscribe(data => {
             distance = 0
             data.forEach(object => {
-                console.log('object: ', object)
                 distance += Math.round(parseFloat(object.distance))
             })
         })

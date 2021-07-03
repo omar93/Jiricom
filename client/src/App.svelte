@@ -1,75 +1,71 @@
 <script>
-	import Sidebar from './components/sidebar/sidebar.svelte'
-	import Distance from './components/main/distance.svelte'
+	import Search from './components/sidebar/sidebar.svelte'
 	import Circle from './components/main/circle.svelte'
-	import Price from './components/main/Price.svelte'
+	import Widget from './components/main/Widget.svelte'
 	import Table from './components/main/table.svelte'
 	import Graph from './components/main/bar.svelte'
-	import Map from './components/main/map.svelte'
+	
+	import { korvStore } from './stores/korvStore'
+
+	let props
+	let ready = false
+	korvStore.subscribe(data => {
+		if(data.length > 0) {
+			props = data[0]
+			console.log(props)
+			ready = true
+		}
+	})
+
 </script>
-
-<div class="container">
-
-	<div class="sideBarContainer">
-		<Sidebar/>
-	</div>
 
 	<div class="main-grid">
 		
-		<div class="top-main">
-
-			<div class="widgetContainer">
-				<div><Circle/></div>
-				<div><Price/></div>
-				<div><Distance/></div>
-			</div>
-
-			<div class="tableContainer style">
-				<Table/>
-			</div>
-	
-
+		<div class="tableContainer">
+			<Table/>
 		</div>
-
 		
 		<div class="barContainer">
-
-			<div class="barContainerPrice style">
-				<Graph/>
-			</div>
-			<div class="barContainerDistance style">
-				<Graph/>
-			</div>
-
+				<div class="barContainerPrice">
+					<Graph/>
+				</div>
+		
+				<div class="barContainerDistance">
+					<Graph/>
+				</div>
 		</div>
-	</div>
 
-</div>
+		<div class="widgetContainer">
+			<div><Search/></div>
+			{#if ready}
+				<div><Circle/></div>
+				<div><Widget imgUrl={'./img/cost.png'} data='{Math.round(props.totalCost)} Kr' plate={props.licensePlate} text='pris'/></div>
+				<div><Widget imgUrl={'./img/distance.png'} data='{Math.round(props.totalDistance)} KM' plate={props.licensePlate} text='distance'/></div>
+				<div><Widget imgUrl={'./img/cost.png'} data='{props.odometerStop} KM' plate={props.licensePlate} text='Odometer'/></div>
+			{/if}
+			
+		</div>
+		
+	</div>
 
 <style>
 	div {
 		background-color: rgb(255, 255, 255);
 	}
-	.container{
-		display: flex;
-		width: 100%;
-		height: 100%;
-		
-	}
 	.main-grid {
-		flex: 1;
+		margin: auto;
+		height: 97%;
+		width: 98%;
+		margin: auto;
 		background-color: #F4F6F9;
-		overflow-y: scroll;
-		display: flex;
-		flex-direction: column;
-		gap: 10px;
-	}
-
-	.top-main {
-		background-color: #F4F6F9;
-		display: flex;
+		display: grid;
 		gap: 10px;
 		padding: 10px;
+		grid-template-rows: 1fr 420px;
+		grid-template-columns: 200px 1fr;
+		grid-template-areas:
+		'widget table'
+		'widget bar';
 	}
 
 	.main-grid > div {
@@ -78,26 +74,21 @@
 	.barContainer {
 		background-color: #F4F6F9;
 		grid-area: bar;
-		display: flex;
+		display: flex;	
 		gap: 10px;
-		padding:10px;
-		padding-top:0px
 	}
 
 	.barContainer > * {
 		flex: 1;
 	}
 	.tableContainer {
-		flex: 1;
 		grid-area: table;
 		overflow-y: hidden;
 		display: flex;
 		justify-content: center;
 		align-items: center;
 	}
-	.mapContainer {
-		grid-area:map;
-	}
+	
 	.widgetContainer {
 		background-color: #F4F6F9;
 		grid-area: widget;

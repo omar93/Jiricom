@@ -8,7 +8,6 @@
     widgetStore.subscribe(data => {
         price = 0
         data.forEach(object => {
-            console.log('object: ', object)
             price += Math.round(parseFloat(object.cost))
         })
     })

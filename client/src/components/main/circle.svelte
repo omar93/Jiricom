@@ -1,19 +1,16 @@
 <script>
-    import { dataStore } from '../../stores/dataStore'
+    import { korvStore } from '../../stores/korvStore'
     import { onMount } from 'svelte'
     import Chart from 'chart.js/auto'
 
     let ctx
     let chart
-    let graphData
-    let priv = 1
-    let job = 1
 
     onMount(() => {
         chart = new Chart(ctx, {
             type: 'pie',
             data: {
-                labels: [`Privatresor: ${priv}`, `Tjänsteresor: ${job}`],
+                labels: [`Resetyper`],
                 datasets: [{
                     label: 'Bensinkostnad för varje månad',
                     data: [1], // Hämta data från mysql
@@ -36,20 +33,19 @@
                 },
             }
         })
-    })
-
-    dataStore.subscribe(data => {
-        console.log('in sub')
-        graphData = data.data
-        graphData.forEach(data => {
-            if(data.routeType === 'Privatresa') priv++ 
-            if(data.routeType === 'Tjänsteres') job++
-            chart.data.datasets[0].data[0] = priv
-            chart.data.datasets[0].data[1] = job
-            chart.data.labels = [`Privatresor: ${priv}`, `Tjänsteresor: ${job}`]
-            chart.update()
+        korvStore.subscribe(data => {
+            if(data.length > 0) {
+                chart.data.datasets[0].data[0] = data[0].type.privat
+                chart.data.datasets[0].data[1] = data[0].type.tjanst
+                chart.data.datasets[0].data[2] = data[0].type.kund
+                chart.data.datasets[0].data[3] = data[0].type.annat
+                chart.data.labels = [`Privatresor: ${data[0].type.privat}`, `Tjänsteresor: ${data[0].type.tjanst}`, `Kundresor ${data[0].type.kund}`, `Annat ${data[0].type.annat}`]
+                chart.update()
+            }
         })
     })
+
+
 </script>
 
 

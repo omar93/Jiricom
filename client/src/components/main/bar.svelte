@@ -91,11 +91,10 @@
 
         })
         widgetStore.set(allCosts)
-
     })
 
     widgetStore.subscribe(data => {
-        console.log('price store: ', data)
+        // console.log('price store: ', data)
         let month = data.map(item => item.month)
         let cost = data.map(item => item.cost)
         if(allCosts.length > 0) {

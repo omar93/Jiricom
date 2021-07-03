@@ -1,11 +1,13 @@
 <script>
     import { widgetStore } from '../../stores/widgetStore'
-    import { plateStore } from "../../stores/plateStore"
-    import { pageStore } from "../../stores/pageStore"
-    import { dataStore } from "../../stores/dataStore"
-    import dbHandler from "../../lib/database"
+    import { plateStore } from '../../stores/plateStore'
+    import { pageStore } from '../../stores/pageStore'
+    import { dataStore } from '../../stores/dataStore'
+    import propHandler from '../../lib/props'
+    import dbHandler from '../../lib/database'
 
     let db = new dbHandler()
+    let prop = new propHandler()
     let textField = ''
     let startDate = '0000-00-00'
     let endDate = '9999-99-99'
@@ -15,20 +17,17 @@
     
 
     const handleSubmit = async (e) => {
-        dataStore.set({'data':[]})
-        widgetStore.set([])
-        plateStore.set('')
+        prop.newSearch()
         e.preventDefault()
         let data = await db.readSearch(`http://localhost/jiricom/server/api/route/readUser.php?licensePlate=${textField}`)
+        prop.recordData(data, textField)
         dataStore.set(data)
-        plateStore.set(textField)
         plate = textField
-
     }
 
     pageStore.subscribe((data) => {
         offset = data
-        console.log("Offset is now: ", offset)
+        // console.log("Offset is now: ", offset)
     })
 </script>
 
