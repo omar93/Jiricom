@@ -9,10 +9,14 @@
 
 	let props
 	let ready = false
+	let costMonth,costCost,distanceMonth,distanceDistance
 	korvStore.subscribe(data => {
 		if(data.length > 0) {
-			props = data[0]
-			console.log(props)
+			props = data[0]	
+			costMonth = data[0].costMonth.map(item => item.month)
+			costCost = data[0].costMonth.map(item => item.cost)
+			distanceMonth = data[0].distanceMonth.map(item => item.month)
+			distanceDistance = data[0].distanceMonth.map(item => item.distance)
 			ready = true
 		}
 	})
@@ -26,13 +30,15 @@
 		</div>
 		
 		<div class="barContainer">
-				<div class="barContainerPrice">
-					<Graph/>
-				</div>
-		
+			{#if ready}
 				<div class="barContainerDistance">
-					<Graph/>
+					<Graph month={costMonth} data={costCost} text='Sträcka'/>
 				</div>
+
+				<div class="barContainerPrice">
+					<Graph month={distanceMonth} data={distanceDistance} text='Bensin'/>
+				</div>
+			{/if}
 		</div>
 
 		<div class="widgetContainer">

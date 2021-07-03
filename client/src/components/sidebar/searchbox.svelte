@@ -1,6 +1,4 @@
 <script>
-    import { widgetStore } from '../../stores/widgetStore'
-    import { plateStore } from '../../stores/plateStore'
     import { pageStore } from '../../stores/pageStore'
     import { dataStore } from '../../stores/dataStore'
     import propHandler from '../../lib/props'
