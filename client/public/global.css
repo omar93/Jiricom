@@ -81,3 +81,15 @@ background: #888;
 ::-webkit-scrollbar-thumb:hover {
 background: #555; 
 }
+
+#customers .th-sort-asc::after {
+	content: "\25b4";
+}
+#customers .th-sort-desc::after {
+	content: "\25be";
+}
+
+#customers .th-sort-desc::after,
+#customers .th-sort-asc::after {
+	margin-left: 5px;
+}
