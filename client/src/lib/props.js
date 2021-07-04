@@ -47,11 +47,12 @@ export default class propHandler {
         graphData.forEach((data,i) => {
             // First month
             if(currentMonth.length === 0) {
-                currentMonth = data.timeStart.split(' ')[0]
+                currentMonth = data.timeStart.split(' ')[1]
+                console.log('Månad: ', currentMonth)
             }
             
             // Month change
-            if(currentMonth != data.timeStart.split(' ')[0]) {
+            if(currentMonth != data.timeStart.split(' ')[1]) {
                 let obj = {
                     'month':currentMonth,
                     'cost':totalCost,
@@ -61,7 +62,7 @@ export default class propHandler {
                 allCosts.push(obj)
                 totalCost = 0
                 totalDistance = 0
-                currentMonth = data.timeStart.split(' ')[0]
+                currentMonth = data.timeStart.split(' ')[1]
             }
             // Last month
             if(graphData.length === i+1) {

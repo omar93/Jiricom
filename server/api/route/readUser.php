@@ -32,8 +32,8 @@
             $route_item = array(
                 'routeId' => $routeId,
                 'licensePlate' => $licensePlate,
-                'timeStart' =>date('yy-m-d h:i:s', strtotime($timeStart)),
-                'timeEnd' => date('yy-m-d h:i:s', strtotime($timeEnd)),
+                'timeStart' =>date('yy-m-d M h:i:s', strtotime($timeStart)),
+                'timeEnd' => date('yy-m-d M h:i:s', strtotime($timeEnd)),
                 'distance' => $distance,
                 'travelTime' => gmdate("H:i:s", $travelTime),
                 'startAddress' => $startAddress,
