@@ -17,6 +17,8 @@
     const handleSubmit = async (e) => {
         prop.newSearch()
         e.preventDefault()
+        // kill bar chart
+        
         let data = await db.readSearch(`http://localhost/jiricom/server/api/route/readUser.php?licensePlate=${textField}`)
         prop.recordData(data, textField)
         dataStore.set(data)

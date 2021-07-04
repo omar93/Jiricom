@@ -2,6 +2,7 @@ import { dataStore } from '../stores/dataStore'
 import { plateStore } from '../stores/plateStore'
 import { widgetStore } from '../stores/widgetStore'
 import { sumDataStore } from '../stores/sumDataStore'
+import { fullDataStore } from '../stores/fullDataStore'
 
 export default class propHandler {
 
@@ -23,6 +24,22 @@ export default class propHandler {
         dataStore.set({'data':[]})
         widgetStore.set([])
         plateStore.set('')
+        sumDataStore.set([])
+        fullDataStore.set([])
+        
+    this.data = {
+        'totalCost':0,
+        'totalDistance':0,
+        'costMonth':0,
+        'distanceMonth':0,
+        'odometerStop':0,
+        'licensePlate':'abc123',
+        'travelTime':0,
+        type: {
+            'privat':0,
+            'tjanst':0
+        }
+    }
     }
 
     recordData(data,plate) {
