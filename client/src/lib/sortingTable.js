@@ -12,8 +12,10 @@ export function sortTableByColumn(table, column, asc = true) {
 
   // Sort each row
   const sortedRows = rows.sort((a, b) => {
+    
     const aColText = a.querySelector(`td:nth-child(${column + 1})`).textContent.trim()
     const bColText = b.querySelector(`td:nth-child(${column + 1})`).textContent.trim()
+    console.log(aColText)
     return aColText > bColText ? (1 * dirModifier) : (-1 * dirModifier)
   })
 
