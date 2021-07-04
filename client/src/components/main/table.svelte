@@ -1,9 +1,15 @@
 <script>
-    import { dataStore } from "../../stores/dataStore"
+    import { sortTableByColumn } from '../../lib/sortingTable'
+    import { fullDataStore } from '../../stores/fullDataStore'
+    import { sumDataStore } from '../../stores/sumDataStore'
+    import { dataStore } from '../../stores/dataStore'
+    import { createEventDispatcher } from 'svelte'
     import{ onMount } from 'svelte'
-    import  { sortTableByColumn } from '../../lib/sortingTable'
+
+    const dispatch = createEventDispatcher()
 
     let items = []
+    let fullData,sumData
     let table,h
     let mockItems = [
         'timeStart',
@@ -32,7 +38,12 @@
         })
     })
 
-
+    const handleClick = (e) => {
+        let routeId = e.path[1].classList[0]
+        let currentRoute = items.find(route => route.routeId === routeId)
+        fullDataStore.set(currentRoute)
+        dispatch('showModal')
+    }
 </script>
 
 <div class="tableContainer" bind:this={table}>
@@ -56,9 +67,9 @@
         {#if items.length != 0}
         <tbody>
             {#each items as item}
-                <tr>
+                <tr class="{item.routeId}">
                     {#each [...Object.values(item)].slice(2, 8) as [...columnItem]}
-                        <td style="height: {h}px;">{columnItem}</td>
+                        <td style="height: {h}px;" on:click={handleClick}>{columnItem}</td>
                     {/each}
                 </tr>
             {/each}
@@ -123,6 +134,10 @@
         position: sticky;
         top: -1px;
         height: 10px;
+        cursor: pointer;
+    }
+
+    td {
         cursor: pointer;
     }
 </style>

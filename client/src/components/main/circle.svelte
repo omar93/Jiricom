@@ -1,5 +1,5 @@
 <script>
-    import { korvStore } from '../../stores/korvStore'
+    import { sumDataStore } from '../../stores/sumDataStore'
     import { onMount } from 'svelte'
     import Chart from 'chart.js/auto'
 
@@ -41,7 +41,7 @@
                 },
             }
         })
-        korvStore.subscribe(data => {
+        sumDataStore.subscribe(data => {
             if(data.length > 0) {
                 chart.data.datasets[0].data[0] = data[0].type.privat
                 chart.data.datasets[0].data[1] = data[0].type.tjanst

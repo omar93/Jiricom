@@ -3,15 +3,17 @@
 	import Circle from './components/main/circle.svelte'
 	import Widget from './components/main/Widget.svelte'
 	import Table from './components/main/table.svelte'
+	import Modal from './components/main/Modal.svelte'
 	import Graph from './components/main/bar.svelte'
 	
-	import { korvStore } from './stores/korvStore'
-	import { fade, fly } from 'svelte/transition';
+	import { sumDataStore } from './stores/sumDataStore'
+	import { fade, fly } from 'svelte/transition'
 
 	let props
+	let showModal = false
 	let ready = false
 	let costMonth,costCost,distanceMonth,distanceDistance
-	korvStore.subscribe(data => {
+	sumDataStore.subscribe(data => {
 		if(data.length > 0) {
 			props = data[0]	
 			costMonth = data[0].costMonth.map(item => item.month)
@@ -24,20 +26,26 @@
 
 </script>
 
+{#if showModal}
+	<div class="modalContainer">
+		<Modal on:close={() => showModal = false}>
+		</Modal>
+	</div>
+{/if}
 	<div class="main-grid">
 		{#if ready}
 		<div class="tableContainer" transition:fly="{{ x: 500, duration: 1000 }}">
-			<Table/>
+			<Table on:showModal={() => showModal = true}/>
 		</div>
 		
 		<div class="barContainer">
 			
 				<div class="barContainerDistance" transition:fly="{{ y: 500, duration: 1000 }}">
-					<Graph month={costMonth} data={costCost} text='Sträcka'/>
+					<Graph month={costMonth} data={costCost} text='Bensin Kostnad'/>
 				</div>
 
 				<div class="barContainerPrice" transition:fly="{{ y: 500, duration: 1000 }}">
-					<Graph month={distanceMonth} data={distanceDistance} text='Bensin'/>
+					<Graph month={distanceMonth} data={distanceDistance} text='Sträcka'/>
 				</div>
 			
 		</div>
@@ -45,11 +53,11 @@
 		<div class="widgetContainer">
 			<div><Search/></div>
 			{#if ready}
-				<div transition:fade={{delay:1000}}><Circle/></div>
-				<div transition:fade={{delay:750}}><Widget imgUrl={'./img/cost.png'} data='{Math.round(props.totalCost)} Kr' plate={props.licensePlate} text='pris'/></div>
-				<div transition:fade={{delay:500}}><Widget imgUrl={'./img/distance.png'} data='{Math.round(props.totalDistance)} KM' plate={props.licensePlate} text='sträcka'/></div>
-				<div transition:fade={{delay:250}}><Widget imgUrl={'./img/cost.png'} data='{props.odometerStop} KM' plate={props.licensePlate} text='odometer'/></div>
-				<div transition:fade={{delay:250}}><Widget imgUrl={'./img/time.png'} data='{props.travelTime} H' plate={props.licensePlate} text='tid'/></div>
+				<div transition:fade={{delay:100}}><Circle/></div>
+				<div transition:fade={{delay:200}}><Widget imgUrl={'./img/cost.png'} data='{Math.round(props.totalCost)} Kr' plate={props.licensePlate} text='pris'/></div>
+				<div transition:fade={{delay:300}}><Widget imgUrl={'./img/distance.png'} data='{Math.round(props.totalDistance)} KM' plate={props.licensePlate} text='sträcka'/></div>
+				<div transition:fade={{delay:400}}><Widget imgUrl={'./img/cost.png'} data='{props.odometerStop} KM' plate={props.licensePlate} text='odometer'/></div>
+				<div transition:fade={{delay:500}}><Widget imgUrl={'./img/time.png'} data='{props.travelTime} H' plate={props.licensePlate} text='tid'/></div>
 			{/if}
 			
 		</div>

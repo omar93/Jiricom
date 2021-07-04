@@ -1,7 +1,7 @@
-import { korvStore } from '../stores/korvStore'
 import { dataStore } from '../stores/dataStore'
 import { plateStore } from '../stores/plateStore'
 import { widgetStore } from '../stores/widgetStore'
+import { sumDataStore } from '../stores/sumDataStore'
 
 export default class propHandler {
 
@@ -99,7 +99,7 @@ export default class propHandler {
         this.setTotalDistance(allCosts)
         this.setCostMonth(allCosts)
         this.setDistanceMonth(allCosts)
-        korvStore.set([this.data])
+        sumDataStore.set([this.data])
         console.log(this.data)
     }
 

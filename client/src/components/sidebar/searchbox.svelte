@@ -7,10 +7,10 @@
     let db = new dbHandler()
     let prop = new propHandler()
     let textField = ''
-    let startDate = '0000-00-00'
-    let endDate = '9999-99-99'
+    // let startDate = '0000-00-00'
+    // let endDate = '9999-99-99'
+    // let limit = 17
     let offset = 0
-    let limit = 17
     let plate = 'abc 123'
     
 
@@ -25,11 +25,11 @@
 
     pageStore.subscribe((data) => {
         offset = data
-        // console.log("Offset is now: ", offset)
     })
 </script>
 
 <form on:submit={handleSubmit}>
+    <!-- 
     <div class="dateContainer">
         <span>Från</span><input type="date" bind:value={startDate} />
     </div>
@@ -37,9 +37,10 @@
     <div class="dateContainer">
         <span>Till</span><input type="date" bind:value={endDate} />
     </div>
-    
+    -->
     <div class="dateContainer">
-        <span>Reg</span>
+        <span>Registreringsnummer</span>
+        <br>
         <input
             type="text"
             name="licensePlate"
@@ -54,12 +55,10 @@
 <style>
     .dateContainer {
         display: flex;
+        flex-direction: column;
         align-items: center;
-        justify-content: space-between;
-    }
-
-    span {
-        width: 15px;
+        justify-content: center;
+        margin: auto;
     }
 
     input {

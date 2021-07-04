@@ -1,5 +1,5 @@
 <script>
-    import { korvStore } from '../../stores/korvStore'
+    import { sumDataStore } from '../../stores/sumDataStore'
     import Chart from 'chart.js/auto'
     import { onMount } from 'svelte'
 
