@@ -12,6 +12,7 @@ export default class propHandler {
         'distanceMonth':0,
         'odometerStop':0,
         'licensePlate':'abc123',
+        'travelTime':0,
         type: {
             'privat':0,
             'tjanst':0
@@ -35,6 +36,7 @@ export default class propHandler {
         let totalDistance = 0
         let currentMonth = ''
         let allCosts = []
+        let totalSeconds
         let type = {
             'privat':0,
             'tjanst':0,
@@ -47,7 +49,7 @@ export default class propHandler {
             if(currentMonth.length === 0) {
                 currentMonth = data.timeStart.split(' ')[0]
             }
-        
+            
             // Month change
             if(currentMonth != data.timeStart.split(' ')[0]) {
                 let obj = {
@@ -81,15 +83,23 @@ export default class propHandler {
             if(data.routeType === 'Kundresa') type.kund++
             if(data.routeType === '2' && data.routeType === '5') type.annat++
             this.data.type = type
+            this.travelTime += data.travelTime
             this.data.licensePlate = data.licensePlate
-        
+            let time = data.travelTime.split(':')
+            let seconds = parseInt((+time[0]) * 60 * 60 + (+time[1]) * 60 + (+time[2]))
+            this.data.travelTime += seconds
+            
         })
+        let measuredTime = new Date(null)
+        measuredTime.setSeconds(this.data.travelTime)
+        this.data.travelTime = measuredTime.toISOString().substr(11, 8)
         widgetStore.set(allCosts)
         this.setTotalCost(allCosts)
         this.setTotalDistance(allCosts)
         this.setCostMonth(allCosts)
         this.setDistanceMonth(allCosts)
         korvStore.set([this.data])
+        console.log(this.data)
     }
 
     setCostMonth(dataArr) {

@@ -58,9 +58,10 @@
 
     const changePage = () => {
         // console.log('Current page: ', pages)
-        current = 7 * pages
-        offset = 7 * pages
-        items = []
+        current = 0
+        offset = 7
+        current += 1 + (7 * parseInt(pages))
+        offset += 1 + (7 * parseInt(pages))
         dataStore.subscribe(data => {
                 items = data.data.slice(current,offset)
                 // console.log(items)
@@ -95,7 +96,7 @@
             {/each}
         {:else}
         
-            {#each {length:7} as apa}
+            {#each {length:7} as nothing}
             <tr>
                 {#each mockItems as item}
                     <td style="height: {h}px;">{item}</td>

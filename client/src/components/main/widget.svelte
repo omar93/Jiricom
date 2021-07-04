@@ -4,7 +4,7 @@
 
 <div class="widgetContainer">
     <img src={imgUrl} alt="cost arrow">
-    <span>Totalt {text} för</span>
+    <span>Summering av {text} för:</span>
     <span>{plate}</span>
     <span>{data}</span>
 </div>
@@ -18,8 +18,9 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        font-size: 15px;
     }
     img{
-        width: 50px;
+        width: 50%;
     }
 </style>

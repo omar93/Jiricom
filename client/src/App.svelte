@@ -6,6 +6,7 @@
 	import Graph from './components/main/bar.svelte'
 	
 	import { korvStore } from './stores/korvStore'
+	import { fade, fly } from 'svelte/transition';
 
 	let props
 	let ready = false
@@ -24,30 +25,31 @@
 </script>
 
 	<div class="main-grid">
-		
-		<div class="tableContainer">
+		{#if ready}
+		<div class="tableContainer" transition:fly="{{ x: 500, duration: 1000 }}">
 			<Table/>
 		</div>
 		
 		<div class="barContainer">
-			{#if ready}
-				<div class="barContainerDistance">
+			
+				<div class="barContainerDistance" transition:fly="{{ y: 500, duration: 1000 }}">
 					<Graph month={costMonth} data={costCost} text='Sträcka'/>
 				</div>
 
-				<div class="barContainerPrice">
+				<div class="barContainerPrice" transition:fly="{{ y: 500, duration: 1000 }}">
 					<Graph month={distanceMonth} data={distanceDistance} text='Bensin'/>
 				</div>
-			{/if}
+			
 		</div>
-
+		{/if}
 		<div class="widgetContainer">
 			<div><Search/></div>
 			{#if ready}
-				<div><Circle/></div>
-				<div><Widget imgUrl={'./img/cost.png'} data='{Math.round(props.totalCost)} Kr' plate={props.licensePlate} text='pris'/></div>
-				<div><Widget imgUrl={'./img/distance.png'} data='{Math.round(props.totalDistance)} KM' plate={props.licensePlate} text='distance'/></div>
-				<div><Widget imgUrl={'./img/cost.png'} data='{props.odometerStop} KM' plate={props.licensePlate} text='Odometer'/></div>
+				<div transition:fade={{delay:1000}}><Circle/></div>
+				<div transition:fade={{delay:750}}><Widget imgUrl={'./img/cost.png'} data='{Math.round(props.totalCost)} Kr' plate={props.licensePlate} text='pris'/></div>
+				<div transition:fade={{delay:500}}><Widget imgUrl={'./img/distance.png'} data='{Math.round(props.totalDistance)} KM' plate={props.licensePlate} text='sträcka'/></div>
+				<div transition:fade={{delay:250}}><Widget imgUrl={'./img/cost.png'} data='{props.odometerStop} KM' plate={props.licensePlate} text='odometer'/></div>
+				<div transition:fade={{delay:250}}><Widget imgUrl={'./img/time.png'} data='{props.travelTime} H' plate={props.licensePlate} text='tid'/></div>
 			{/if}
 			
 		</div>
